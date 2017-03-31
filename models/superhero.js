@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var SuperheroSchema = new mongoose.Schema({
     name: String,
     superPower: String,
-    univers: String,
+    universe: String,
     evil: Boolean,
     rank: Number
 });
