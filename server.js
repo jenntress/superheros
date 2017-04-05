@@ -2,7 +2,7 @@
 
 var express = require('express'); //making our application use this
 var Superhero = require('./models/superhero');
-var Villian = require('./models/villian');
+var Villain = require('./models/villain');
 var app     = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
@@ -15,10 +15,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/superheroes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//************VILLIANS***********************************
-//GET - returns all Villians from the database (Crud)
-app.get('/villians', function(req, res){
-  Villian.find(function(err, data){
+//************VILLAINS***********************************
+//GET - returns all Villains from the database (Crud)
+app.get('/villains', function(req, res){
+  Villain.find(function(err, data){
     if(err){
       console.log(err);
     } else {
@@ -27,9 +27,20 @@ app.get('/villians', function(req, res){
   });
 });
 
-//POST - creates and saves a new villian entered into Postman (cRud)
-app.post('/villians', function(req, res){
-  var newVill = new Villian({
+//GET - mongoose returns specific villain from the database (cRud)
+app.get('/villains/:villain_id', function(req, res){
+  Villain.findById(req.params.villain_id, function(err, fwieut){
+    if(err){
+      console.log(err)
+    }else {
+      res.json(fwieut)
+    }
+  });
+});
+
+//POST - creates and saves a new villain entered into Postman (cRud)
+app.post('/villains', function(req, res){
+  var newVill = new Villain({
     name: req.body.name,
     evilPower: req.body.evilPower,
     evil: req.body.evil,
@@ -45,9 +56,9 @@ app.post('/villians', function(req, res){
 });
 
 //DELETE - allows you to delete an entry from the database (cruD)
-app.delete('/villians/:villian_id', function(req, res){
+app.delete('/villains/:villain_id', function(req, res){
 
-  Villian.remove({_id: req.params.villian_id}, function(err){ // we're not expecting data back, so we don't need res
+  Villain.remove({_id: req.params.villain_id}, function(err){ // we're not expecting data back, so we don't need res
     if(err){
       console.log(err);
     }else {
