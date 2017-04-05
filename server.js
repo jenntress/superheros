@@ -21,7 +21,7 @@ app.use(express.static('public'));//tells express that all files inside the publ
 app.set('view engine', 'ejs'); //telling node to use ejs "ejs middleware"
 app.set('views', path.join(__dirname, 'views'));//now telling node where the ejs is - and use this directory
 
-app.get('/', function(req, res){
+app.get('/', function(req, res){ //this forces localhost:3000 to print index.ejs
   res.render('index')
 });
 
@@ -84,7 +84,7 @@ app.delete('/villains/:villain_id', function(req, res){
 
 //********************SUPERHEROES***********************************
 // returns all Superheroes from the database
-app.get('/superheroes', function(req, res){
+app.get('/API/superheroes', function(req, res){
    Superhero.find(function(err, data){
      if(err){
        console.log(err);
@@ -95,7 +95,8 @@ app.get('/superheroes', function(req, res){
 });
 
 //get and post methods are creating an API for us so that we can interact with the database
-app.post('/superheroes', function(req, res){
+app.post('/API/superheroes', function(req, res){
+  //json is a backend server route (ALL json data points should be /API)
   var newSuper = new Superhero({
     name:       req.body.name,
     superPower: req.body.superPower,
@@ -112,7 +113,7 @@ app.post('/superheroes', function(req, res){
   });
 });
 
-app.get('/superheroes/:superhero_id', function(req, res){
+app.get('/API/superheroes/:superhero_id', function(req, res){
   Superhero.findById(req.params.superhero_id, function(err, gftq){
     if(err){
       console.log(err)
@@ -123,7 +124,7 @@ app.get('/superheroes/:superhero_id', function(req, res){
 });
 
 //app.delete - we can use the same URL because we're using a different method
-app.delete('/superheroes/:superhero_id', function(req, res){
+app.delete('/API/superheroes/:superhero_id', function(req, res){
 
   Superhero.remove({_id: req.params.superhero_id}, function(err){ // we're not expecting data back, so we don't need res
     if(err){

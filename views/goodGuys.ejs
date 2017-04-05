@@ -11,15 +11,16 @@
 
 
 <div>
-<h4>This is my goodGuys.ejs</h4>
+<h4>This is my goodGuys.ejs (HTML) H4</h4> <!--ejs is embedded javascript "server side rendering"-->
 </div>
 
 <div id="sample">
   <h3>{{ title }}</h3>
+  <h4>The UL below has my random array of numbers</h4>
   <ul v-for="n in numbers"> <!--setting up the loop to shoot out an li for every n-->
     <li>{{ n }}</li>
   </ul>
-  <h3>{{ heroes[0].name }}</h3> <!--get the very first item "name" is from superheroes -> returns "Superman" -->
+  <h3>The first superhero's name: {{ heroes[0].name }}</h3> <!--get the very first item "name" in the database -> returns "Superman" -->
 </div>
 
 
