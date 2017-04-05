@@ -1,0 +1,7 @@
+body {  /*change the background color of the html page - if it's not yellow, it's not working */
+   background-color: #FCF3CF
+}
+
+img { /*shrink ALL images to a decent size so that they don't take up too much space */
+  width: 40%;
+}

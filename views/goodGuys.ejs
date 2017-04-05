@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HERE JENN</title> <!--ltitle the page so that I can find it in my browser tabs-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css"> <!--My CSS comes after bootstrap to cascade-->
+  </head>
+  <body class="container">
+
+
+
+<div>
+<h4>This is my goodGuys.ejs</h4>
+</div>
+
+<div id="sample">
+  <h3>{{ title }}</h3>
+  <ul v-for="n in numbers"> <!--setting up the loop to shoot out an li for every n-->
+    <li>{{ n }}</li>
+  </ul>
+  <h3>{{ heroes[0].name }}</h3> <!--get the very first item "name" is from superheroes -> returns "Superman" -->
+</div>
+
+
+
+
+
+<!--keep script at the end-->
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="hero.js"></script> <!--link my javascript file from the same directory location-->
+
+      </body>
+</html>

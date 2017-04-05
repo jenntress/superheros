@@ -1,11 +1,12 @@
 //console.log("YOU GOT IT TO WORK JENN!!"); //smoke test
 
-var express = require('express'); //making our application use this
-var Superhero = require('./models/superhero');
-var Villain = require('./models/villain');
-var app     = express();
+var express    = require('express'); //making our application use this
+var path       = require('path');
+var Superhero  = require('./models/superhero');
+var Villain    = require('./models/villain');
+var app        = express();
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var mongoose   = require('mongoose');
 
 
 //app.METHOD('URL LOCATION', fucntion(req, res){})
@@ -14,6 +15,20 @@ mongoose.connect("mongodb://127.0.0.1:27017/superheroes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('public'));//tells express that all files inside the public folder are client-side "static code"
+
+app.set('view engine', 'ejs'); //telling node to use ejs "ejs middleware"
+app.set('views', path.join(__dirname, 'views'));//now telling node where the ejs is - and use this directory
+
+app.get('/', function(req, res){
+  res.render('index')
+});
+
+app.get('/heroes', function(req, res){
+  res.render('goodGuys');
+});
+
 
 //************VILLAINS***********************************
 //GET - returns all Villains from the database (Crud)
