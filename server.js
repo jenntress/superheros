@@ -84,7 +84,7 @@ app.delete('/villains/:villain_id', function(req, res){
 
 //********************SUPERHEROES***********************************
 // returns all Superheroes from the database
-app.get('/API/superheroes', function(req, res){
+app.get('/api/superheroes', function(req, res){
    Superhero.find(function(err, data){
      if(err){
        console.log(err);
@@ -94,15 +94,37 @@ app.get('/API/superheroes', function(req, res){
    });
 });
 
-//get and post methods are creating an API for us so that we can interact with the database
-app.post('/API/superheroes', function(req, res){
-  //json is a backend server route (ALL json data points should be /API)
+//PUT - makes updates to existing data in the database
+app.put('/api/superheroes/:superhero_id', function(req,res){
+  Superhero.findById(req.params.superhero_id, function(err, hero){
+//     if(!hero) return res.status(404).send(err, "Can't find superhero!"); //one-line handler - most developers only use in node
+    hero.name = req.body.name ? req.body.name : hero.name //(single object in the database, if name is blank, put in a name)
+    hero.superPower = req.body.superPower ? req.body.superPower : hero.superPower;
+    hero.universe = req.body.universe ? req.body.universe : hero.universe;
+    hero.rank = req.body.rank ? req.body.rank : hero.rank;
+    hero.alias = req.body.alias ? req.body.alias : hero.alias;
+    hero.img = req.body.img ? req.body.img : hero.img;
+    hero.save(function(e){
+      if(e){
+        res.status(500).send(e) //handling errors properly
+      }else{
+        res.json(hero);
+      }
+    })
+  })
+});
+
+//get and post methods are creating an api for us so that we can interact with the database
+app.post('/api/superheroes', function(req, res){
+  //json is a backend server route (ALL json data points should be /api)
   var newSuper = new Superhero({
     name:       req.body.name,
     superPower: req.body.superPower,
     universe:   req.body.universe,
     evil:       req.body.evil,
     rank:       req.body.rank,
+    alias:      req.body.alias,
+    img:        req.body.img
   });
   newSuper.save(function(err, sh){
     if(err){
@@ -113,7 +135,7 @@ app.post('/API/superheroes', function(req, res){
   });
 });
 
-app.get('/API/superheroes/:superhero_id', function(req, res){
+app.get('/api/superheroes/:superhero_id', function(req, res){
   Superhero.findById(req.params.superhero_id, function(err, gftq){
     if(err){
       console.log(err)
@@ -123,8 +145,8 @@ app.get('/API/superheroes/:superhero_id', function(req, res){
   });
 });
 
-//app.delete - we can use the same URL because we're using a different method
-app.delete('/API/superheroes/:superhero_id', function(req, res){
+//app.delete - we can use the same URL because we're using a different method (query for an id)
+app.delete('/api/superheroes/:superhero_id', function(req, res){
 
   Superhero.remove({_id: req.params.superhero_id}, function(err){ // we're not expecting data back, so we don't need res
     if(err){

@@ -5,7 +5,9 @@ var SuperheroSchema = new mongoose.Schema({
     superPower: String,
     universe: String,
     evil: Boolean,
-    rank: Number
+    rank: Number,
+    alias: String,
+    img: String
 });
 
 module.exports = mongoose.model('Superhero', SuperheroSchema);
