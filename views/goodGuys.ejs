@@ -9,21 +9,23 @@
   <body class="container">
 
 
+<h4>This is my goodGuys.ejs and my H4 tag</h4> <!--ejs is embedded javascript "server side rendering"-->
 
-<div>
-<h4>This is my goodGuys.ejs (HTML) H4</h4> <!--ejs is embedded javascript "server side rendering"-->
+
+<div id="component">
+
+  <div v-for="hero in heroes" class="hero-panel">
+    <h3>{{ hero.name }}</h3>
+    <img :src="hero.img"/>
+    <ul>
+      <li>{{ hero.alias }}</li>
+      <li>{{ hero.rank }}</li>
+      <li>{{ hero.superPower }}</li>
+    </ul>
+  </div>
+
+
 </div>
-
-<div id="sample">
-  <h3>{{ title }}</h3>
-  <h4>The UL below has my random array of numbers</h4>
-  <ul v-for="n in numbers"> <!--setting up the loop to shoot out an li for every n-->
-    <li>{{ n }}</li>
-  </ul>
-  <h3>The first superhero's name: {{ heroes[0].name }}</h3> <!--get the very first item "name" in the database -> returns "Superman" -->
-</div>
-
-
 
 
 

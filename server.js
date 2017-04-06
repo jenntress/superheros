@@ -25,7 +25,7 @@ app.get('/', function(req, res){ //this forces localhost:3000 to print index.ejs
   res.render('index')
 });
 
-app.get('/heroes', function(req, res){
+app.get('/heroes', function(req, res){ //when the browser gets 3000/heroes... is pulls the goodGuys.ejs
   res.render('goodGuys');
 });
 

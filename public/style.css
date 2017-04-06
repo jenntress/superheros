@@ -5,3 +5,18 @@ body {  /*change the background color of the html page - if it's not yellow, it'
 img { /*shrink ALL images to a decent size so that they don't take up too much space */
   width: 40%;
 }
+
+ul { /* get rid of all the bullets - yuck */
+  list-style: none;
+}
+
+#component {
+  display: flex;
+}
+
+.hero-panel{
+  border: 3px solid darkgray;
+  width: 50%;
+  margin: 10px;
+  text-align: center;
+}
