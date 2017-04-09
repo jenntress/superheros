@@ -29,10 +29,14 @@ app.get('/heroes', function(req, res){ //when the browser gets 3000/heroes... is
   res.render('goodGuys');
 });
 
+app.get('/villains', function(req, res){ //when the browser gets 3000/bad... is pulls the badGuys.ejs
+  res.render('badGuys');
+});
+
 
 //************VILLAINS***********************************
 //GET - returns all Villains from the database (Crud)
-app.get('/villains', function(req, res){
+app.get('/api/villains', function(req, res){
   Villain.find(function(err, data){
     if(err){
       console.log(err);
@@ -43,7 +47,7 @@ app.get('/villains', function(req, res){
 });
 
 //GET - mongoose returns specific villain from the database (cRud)
-app.get('/villains/:villain_id', function(req, res){
+app.get('/api/villains/:villain_id', function(req, res){
   Villain.findById(req.params.villain_id, function(err, fwieut){
     if(err){
       console.log(err)
@@ -54,7 +58,7 @@ app.get('/villains/:villain_id', function(req, res){
 });
 
 //POST - creates and saves a new villain entered into Postman (cRud)
-app.post('/villains', function(req, res){
+app.post('/api/villains', function(req, res){
   var newVill = new Villain({
     name: req.body.name,
     evilPower: req.body.evilPower,
@@ -70,8 +74,11 @@ app.post('/villains', function(req, res){
   });
 });
 
+//PUT - makes updates to existing data in the database
+//NEED TO ADD PUT HERE!!
+
 //DELETE - allows you to delete an entry from the database (cruD)
-app.delete('/villains/:villain_id', function(req, res){
+app.delete('/api/villains/:villain_id', function(req, res){
 
   Villain.remove({_id: req.params.villain_id}, function(err){ // we're not expecting data back, so we don't need res
     if(err){
@@ -102,7 +109,7 @@ app.put('/api/superheroes/:superhero_id', function(req,res){
     hero.superPower = req.body.superPower ? req.body.superPower : hero.superPower;
     hero.universe = req.body.universe ? req.body.universe : hero.universe;
     hero.rank = req.body.rank ? req.body.rank : hero.rank;
-    hero.alias = req.body.alias ? req.body.alias : hero.alias;
+    hero.alterEgo = req.body.alterEgo ? req.body.alterEgo : hero.alterEgo;
     hero.img = req.body.img ? req.body.img : hero.img;
     hero.save(function(e){
       if(e){
@@ -123,7 +130,7 @@ app.post('/api/superheroes', function(req, res){
     universe:   req.body.universe,
     evil:       req.body.evil,
     rank:       req.body.rank,
-    alias:      req.body.alias,
+    alterEgo:      req.body.alterEgo,
     img:        req.body.img
   });
   newSuper.save(function(err, sh){

@@ -1,26 +1,27 @@
 <!DOCTYPE html>
+<!--"ejs" is embedded javascript "server side rendering"-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>HERE JENN</title> <!--ltitle the page so that I can find it in my browser tabs-->
+    <title>goodGuys.ejs</title> <!--ltitle the page so that I can find it in my browser tabs-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css"> <!--My CSS comes after bootstrap to cascade-->
+    <link rel="stylesheet" href="style.css"> <!--"My" CSS comes after bootstrap to cascade-->
   </head>
   <body class="container">
 
 
-<h4>This is my goodGuys.ejs and my H4 tag</h4> <!--ejs is embedded javascript "server side rendering"-->
+<h4>The goodGuys.ejs</h4>
 
 
 <div id="component">
 
-  <div v-for="hero in heroes" class="hero-panel">
+  <div v-for="hero in heroes" class="panel">
     <h3>{{ hero.name }}</h3>
     <img :src="hero.img"/>
     <ul>
-      <li>{{ hero.alias }}</li>
-      <li>{{ hero.rank }}</li>
+      <li>{{ hero.alterEgo }}</li>
       <li>{{ hero.superPower }}</li>
+      <li>{{ hero.universe }}</li>
     </ul>
   </div>
 

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>HERE JENN</title> <!--ltitle the page so that I can find it in my browser tabs-->
+    <title>VILLAINS</title> <!--title the page so that I can find it in my browser tabs-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css"> <!--My CSS comes after bootstrap to cascade-->
   </head>
@@ -11,10 +11,22 @@
 
 
 <div>
-<h4>Hells - Villains ejs</h4>
+<h4>Hello - badGuys ejs</h4>
 </div>
+<div id="component">
+
+  <div v-for="evildoer in evildoers" class="panel">
+    <h3>{{ evildoer.name }}</h3>
+    <img :src="evildoer.img"/>
+    <ul>
+      <li>{{ evildoer.evilPower }}</li>
+      <li>{{ evildoer.nemesis }}</li>
+      <li>{{ evildoer.alterEgo }}</li>
+    </ul>
+  </div>
 
 
+</div>
 
 
 
@@ -23,6 +35,6 @@
 <!--keep script at the end-->
     <script src="https://unpkg.com/vue"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="app.js"></script> <!--link my javascript file from the same directory location-->
+    <script src="evildoer.js"></script> <!--link my javascript file from the same directory location-->
       </body>
 </html>

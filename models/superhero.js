@@ -4,9 +4,9 @@ var SuperheroSchema = new mongoose.Schema({
     name: String,
     superPower: String,
     universe: String,
-    evil: Boolean,
+    evil: {default: false, type: Boolean},
     rank: Number,
-    alias: String,
+    alterEgo: String,
     img: String
 });
 
