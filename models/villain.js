@@ -11,7 +11,7 @@ var VillainSchema = new mongoose.Schema({
 
 VillainSchema.methods.loadData = function(data){
   this.name     = data.name ? data.name : this.name;
-  this.nemesis     = data.nemesis ? data.nemesis : this.nemesis;
+  this.nemesis  = data.nemesis ? data.nemesis : this.nemesis;
   this.evil     = data.evil ? data.evil : this.evil;
   this.alterEgo = data.alterEgo ? data.alterEgo : this.alterEgo;
   this.img      = data.img ? data.img : this.img;
