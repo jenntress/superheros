@@ -12,7 +12,6 @@ var mongoose   = require('mongoose');
 //app.METHOD('URL LOCATION', fucntion(req, res){})
 mongoose.connect("mongodb://127.0.0.1:27017/superheroes");
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,61 +33,6 @@ app.get('/villains', function(req, res){ //when the browser gets 3000/bad... is 
 });
 
 
-//************VILLAINS***********************************
-//GET - returns all Villains from the database (Crud)
-app.get('/api/villains', function(req, res){
-  Villain.find(function(err, data){
-    if(err){
-      console.log(err);
-    } else {
-      res.json(data);
-    }
-  });
-});
-
-//GET - mongoose returns specific villain from the database (cRud)
-app.get('/api/villains/:villain_id', function(req, res){
-  Villain.findById(req.params.villain_id, function(err, fwieut){
-    if(err){
-      console.log(err)
-    }else {
-      res.json(fwieut)
-    }
-  });
-});
-
-//POST - creates and saves a new villain entered into Postman (cRud)
-app.post('/api/villains', function(req, res){
-  var newVill = new Villain({
-    name: req.body.name,
-    evilPower: req.body.evilPower,
-    evil: req.body.evil,
-    nemesis: req.body.nemesis
-  });
-  newVill.save(function(err, vill){
-    if(err){
-      console.log(err)
-    } else {
-      res.json(vill)
-    }
-  });
-});
-
-//PUT - makes updates to existing data in the database
-//NEED TO ADD PUT HERE!!
-
-//DELETE - allows you to delete an entry from the database (cruD)
-app.delete('/api/villains/:villain_id', function(req, res){
-
-  Villain.remove({_id: req.params.villain_id}, function(err){ // we're not expecting data back, so we don't need res
-    if(err){
-      console.log(err);
-    }else {
-      res.send("Bad guy deleted!")
-    }
-  });
-});
-
 //********************SUPERHEROES***********************************
 // returns all Superheroes from the database
 app.get('/api/superheroes', function(req, res){
@@ -105,12 +49,10 @@ app.get('/api/superheroes', function(req, res){
 app.put('/api/superheroes/:superhero_id', function(req,res){
   Superhero.findById(req.params.superhero_id, function(err, hero){
 //     if(!hero) return res.status(404).send(err, "Can't find superhero!"); //one-line handler - most developers only use in node
-    hero.name = req.body.name ? req.body.name : hero.name //(single object in the database, if name is blank, put in a name)
-    hero.superPower = req.body.superPower ? req.body.superPower : hero.superPower;
-    hero.universe = req.body.universe ? req.body.universe : hero.universe;
-    hero.rank = req.body.rank ? req.body.rank : hero.rank;
-    hero.alterEgo = req.body.alterEgo ? req.body.alterEgo : hero.alterEgo;
-    hero.img = req.body.img ? req.body.img : hero.img;
+
+hero.loadPower(req.body.superPower);//mongoose methods
+hero.loadData(req.body);
+
     hero.save(function(e){
       if(e){
         res.status(500).send(e) //handling errors properly
@@ -123,17 +65,12 @@ app.put('/api/superheroes/:superhero_id', function(req,res){
 
 //get and post methods are creating an api for us so that we can interact with the database
 app.post('/api/superheroes', function(req, res){
+  var newSuperHero = new Superhero();
   //json is a backend server route (ALL json data points should be /api)
-  var newSuper = new Superhero({
-    name:       req.body.name,
-    superPower: req.body.superPower,
-    universe:   req.body.universe,
-    evil:       req.body.evil,
-    rank:       req.body.rank,
-    alterEgo:      req.body.alterEgo,
-    img:        req.body.img
-  });
-  newSuper.save(function(err, sh){
+  newSuperHero.loadData(req.body.superPower);
+  newSuperHero.loadData(req.body);
+
+  newSuperHero.save(function(err, sh){
     if(err){
       console.log(err)
     } else {
@@ -164,7 +101,75 @@ app.delete('/api/superheroes/:superhero_id', function(req, res){
   });
 });
 
+//************VILLAINS***********************************
+//GET - returns all Villains from the database (Crud)
+app.get('/api/villains', function(req, res){
+  Villain.find(function(err, data){
+    if(err){
+      console.log(err);
+    } else {
+      res.json(data);
+    }
+  });
+});
 
+//GET - mongoose returns specific villain from the database (cRud)
+app.get('/api/villains/:villain_id', function(req, res){
+  Villain.findById(req.params.villain_id, function(err, fwieut){
+    if(err){
+      console.log(err)
+    }else {
+      res.json(fwieut)
+    }
+  });
+});
+
+//POST - creates and saves a new villain entered into Postman (cRud)
+app.post('/api/villains', function(req, res){
+  var newVill = new Villain();
+
+  newVill.loadPower(req.body.evilPower);
+  newVill.loadData(req.body);
+
+  newVill.save(function(err, vill){
+    if(err){
+      console.log(err)
+    } else {
+      res.json(vill)
+    }
+  });
+});
+
+//PUT - makes updates to existing data in the database
+app.put('/api/villains/:villain_id', function(req,res){
+  Villain.findById(req.params.villain_id, function(err, villain){
+//     if(!hero) return res.status(404).send(err, "Can't find superhero!"); //one-line handler - most developers only use in node
+
+villain.loadPower(req.body.evilPower);//mongoose methods
+villain.loadData(req.body);
+
+
+    villain.save(function(err){
+      if(err){
+        res.status(500).send(err) //handling errors properly
+      }else{
+        res.json(villain);
+      }
+    })
+  })
+});
+
+//DELETE - allows you to delete an entry from the database (cruD)
+app.delete('/api/villains/:villain_id', function(req, res){
+
+  Villain.remove({_id: req.params.villain_id}, function(err){ // we're not expecting data back, so we don't need res
+    if(err){
+      console.log(err);
+    }else {
+      res.send("Bad guy deleted!")
+    }
+  });
+});
 
 //************BACK CODE TO KEEP AT THE END***********************************
 //testing to see if mongo is working
