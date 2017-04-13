@@ -29,7 +29,7 @@ app.get('/heroes', function(req, res){ //when the browser gets 3000/heroes... is
   res.render('goodGuys');
 });
 
-app.get('/evildoers', function(req, res){ //when the browser gets 3000/bad... is pulls the badGuys.ejs
+app.get('/villains', function(req, res){ //when the browser gets 3000/bad... is pulls the badGuys.ejs
   res.render('badGuys');
 });
 
