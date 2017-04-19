@@ -17,6 +17,7 @@ Router.route('/')
      }
    });
  });
+
  //****** GET by ID *****
  Router.route('/superhero_id')
   .get(function(req, res){
@@ -41,7 +42,34 @@ Router.route('/') // Route chained to the GET route (chained together because th
        res.json(sh)
      }
    });
- });
+ })
+ //*******async********** "async.each" doing a bunch of things at once.. asynchronously (good for batching)
+ //async for each thing in this array of data, for each item in the array the function will execute.
+ //must tell async when to quit - use "cb" - put it with whatever results I want once I've completed that action.
+// in postman, http://localhost:3000/api/superheroes/multiple-superPowers
+// go to POST, then Body, then "raw", then text dropdown to JSON, then type:
+//    {"data":[{ "name": "superman"},{ "name": "uberman" },{ "name": "loserman" }]}
+  .post(function(req,res){
+      var newHeroes = [];
+      console.log(req.body.data, "REQUEST BODY DATA");
+      async.each(req.body.data, function(hero, cb) {
+        var newHero = new Superhero();
+          newHero.loadPower(hero.superPower);
+          newHero.loadData(hero);
+          newHero.save()
+          .then(function(hero){
+            console.log(hero, 'EACH HERO SUCCESS');
+            newHeroes.push(hero);
+            cb(); //do not pass a parameter into the first cb
+          }, function(err){
+            if(err) cb(err);
+          });
+      },function(err) {
+          if(err) throw err;
+          res.json(newHeroes);
+        });
+    });
+
 //****** PUT *******
 Router.route('/:superhero_id')
  .put(function(req, res){

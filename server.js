@@ -1,4 +1,3 @@
-
 var express    = require('express'); //making our application use this
 var path       = require('path');
 var Superhero  = require('./models/superhero');
@@ -39,11 +38,8 @@ app.get('/villains', function(req, res){ //when the browser gets 3000/bad... is 
 
 
 
+
 //************BACK CODE TO KEEP AT THE END***********************************
-//testing to see if mongo is working
-app.post("/test", function(req, res){
-  res.send(req.body);
-});
 
 //use all of the stuff we exported to heroRoutes (preference everything you access with "/api/superheroes")
 app.use('/api/superheroes', heroRoutes);//mount the endpoint
